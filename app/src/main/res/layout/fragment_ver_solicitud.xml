@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VerSolicitudFragment">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E9E9E9"
+        tools:context=".VerSolicitudFragment"
+        >
+
+        <RelativeLayout
+            android:id="@+id/bucar_solicitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/card_border"
+            android:paddingHorizontal="17dp"
+            android:paddingVertical="5dp"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:longClickable="true">
+
+            <EditText
+                android:id="@+id/editextBuscar"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Buscar por ID"
+                android:textStyle="bold"
+                android:inputType="number"
+                android:layout_centerVertical="true"
+                android:paddingLeft="15dp"
+                android:textColorHint="#9995A8"
+                android:textColor="#000000"
+                android:background="@drawable/buscar_edittext_background"
+                />
+
+            <ImageView
+                android:id="@+id/buscar_cliente_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/icon_buscar_prestamos"
+                android:onClick="onClick"
+                android:clickable="true"
+                />
+
+        </RelativeLayout>
+
+        <!--
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/background_circle"
+            >
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ver Solicitud"
+                android:textSize="22sp"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:id="@+id/IconUser"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_prestamo"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                />
+
+        </RelativeLayout>
+        -->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bucar_solicitud"
+            android:layout_marginTop="40dp"
+            >
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/campoOcupacionVerSoli"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Ocupación"
+                    android:textColor="#54555B"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/campoFecha"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha"
+                    android:background="@drawable/border_edittext_background"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="#54555B"
+                    android:layout_marginTop="25dp"
+                    android:textSize="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/campoMontoS"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Monto Solicitado"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#54555B"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/campoIngresoVerSoli"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Ingreso Mensual"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#54555B"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/campoMontoA"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Monto Aprovado"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#54555B"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/campoDictamen"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Dictamen"
+                    android:layout_marginTop="25dp"
+                    android:textColor="#54555B"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/campoFechaD"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:text="Fecha Dictamen"
+                    android:textColor="#54555B"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/border_edittext_background"
+                    />
+
+                <Button
+                    android:id="@+id/btnAprovar"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Aprovar"
+                    android:onClick="onClick"
+                    android:backgroundTint="@color/primary_color"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:layout_marginTop="30dp"
+                    android:padding="12dp"
+                    android:layout_gravity="center"
+                    />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+</FrameLayout>

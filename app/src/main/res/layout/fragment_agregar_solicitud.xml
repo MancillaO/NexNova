@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgregarSolicitudFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E9E9E9"
+        tools:context=".AgregarSolicitudFragment">
+
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/background_circle"
+            android:paddingVertical="10dp">
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="Datos Personales"
+                android:textColor="#ffffff"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/IconSolicitud"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/icon_add_solicitud" />
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topbar"
+            android:layout_marginTop="40dp">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/campoID"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="ID"
+                    android:inputType="number"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#1D2262" />
+
+
+                <EditText
+                    android:id="@+id/campoOcupacionSoli"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="Ocupación"
+                    android:inputType="text"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#1D2262"
+                    android:layout_marginTop="25dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/layoutFecha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/campoFecha"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".80"
+                        android:background="@drawable/border_edittext_background"
+                        android:ems="10"
+                        android:hint="dd/mm/aaaa"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="12dp"
+                        android:textColor="#1D2262" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.04" />
+
+                    <ImageView
+                        android:id="@+id/selectDateButton"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".20"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/icon_calendar" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/campoMonto"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="Monto Solicitado"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#1D2262" />
+
+                <EditText
+                    android:id="@+id/campoIngreso"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="Ingreso Mensual"
+                    android:inputType="textPersonName"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#1D2262" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:backgroundTint="@color/primary_color"
+            android:onClick="onClick"
+            android:padding="12dp"
+            android:text="Registrar"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+    </RelativeLayout>
+</FrameLayout>

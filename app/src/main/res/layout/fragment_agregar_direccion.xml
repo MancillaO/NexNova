@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgregarDireccionFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E9E9E9"
+        tools:context=".AgregarDireccionFragment"
+        >
+
+        <RelativeLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:background="@drawable/background_circle"
+            >
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección"
+                android:textSize="22sp"
+                android:textColor="#ffffff"
+                android:layout_marginLeft="20dp"
+                android:layout_centerVertical="true"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:id="@+id/IconUser"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/icon_cliente"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                />
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topbar"
+            android:layout_marginTop="20dp"
+            >
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <EditText
+                    android:id="@+id/campoCalle"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="Calle"
+                    android:inputType="text"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#534B85" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="25dp"
+                    >
+
+                    <EditText
+                        android:id="@+id/campoNumInt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.45"
+                        android:ems="10"
+                        android:hint="N. Interior"
+                        android:inputType="text"
+                        android:textColor="#534B85"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="20dp"
+                        android:background="@drawable/border_edittext_background"
+                        />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1" />
+
+                    <EditText
+                        android:id="@+id/campoNumExt"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.45"
+                        android:ems="10"
+                        android:hint="N. Exterior"
+                        android:inputType="text"
+                        android:textColor="#534B85"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="20dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/border_edittext_background"
+                        />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/campoColonia"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Colonia"
+                    android:layout_marginTop="25dp"
+                    android:inputType="text"
+                    android:textColor="#534B85"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    />
+
+
+                <EditText
+                    android:id="@+id/campoEstado"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Estado"
+                    android:inputType="text"
+                    android:textColor="#534B85"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+
+                    />
+
+                <EditText
+                    android:id="@+id/campoCP"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Código Postal"
+                    android:layout_marginTop="25dp"
+                    android:inputType="number"
+                    android:textColor="#534B85"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    />
+
+                <EditText
+                    android:id="@+id/campoTpPropiedad"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="TP Propiedad"
+                    android:layout_marginTop="25dp"
+                    android:inputType="text"
+                    android:textColor="#534B85"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    />
+
+                <Button
+                    android:id="@+id/btnRegistrar"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:text="Registrar"
+                    android:onClick="onClick"
+                    android:backgroundTint="@color/primary_color"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#ffffff"
+                    android:textSize="16dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="15dp"
+                    android:padding="12dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="30dp"
+                    />
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+</FrameLayout>
