@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prolender.R;
 
@@ -18,6 +19,8 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
     private LinearLayout btnAgregar;
     private LinearLayout btnAgregarS;
     private TextView btnDetalles;
+    RecyclerView recyclerView;
+
 
     public ClientesFragment() {
 
@@ -28,12 +31,13 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
 
         View view = inflater.inflate(R.layout.fragment_clientes, container, false);
 
+        recyclerView = view.findViewById(R.id.recyclerView);
         btnAgregar = view.findViewById(R.id.add_cliente);
         btnAgregar.setOnClickListener(this);
         btnAgregarS = view.findViewById(R.id.add_solicitud);
         btnAgregarS.setOnClickListener(this);
-        btnDetalles = view.findViewById(R.id.txtDetalles1);
-        btnDetalles.setOnClickListener(this);
+        //btnDetalles = view.findViewById(R.id.txtDetalles1);
+        //btnDetalles.setOnClickListener(this);
         return view;
     }
 
