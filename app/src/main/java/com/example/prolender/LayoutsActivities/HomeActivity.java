@@ -10,8 +10,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.prolender.FragmentsActivities.ClientesFragments.ClientesFragment;
-import com.example.prolender.FragmentsActivities.ConfigFragment;
-import com.example.prolender.FragmentsActivities.HomeFragment;
+import com.example.prolender.FragmentsActivities.ConfiguracionFragments.ConfigFragment;
+import com.example.prolender.FragmentsActivities.HomeFragments.HomeFragment;
 import com.example.prolender.FragmentsActivities.PrestamosFragments.PrestamosFragment;
 import com.example.prolender.R;
 import com.example.prolender.databinding.ActivityHomeBinding;
