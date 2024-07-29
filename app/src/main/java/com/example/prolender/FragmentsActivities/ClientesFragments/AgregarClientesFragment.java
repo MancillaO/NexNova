@@ -64,15 +64,14 @@ public class AgregarClientesFragment extends Fragment {
                 // Crea una instancia de MyDatabaseHelper
                 MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
                 // Inserta los datos del cliente para agregarlos a la base de datos
-                myDB.addCliente(nombre.getText().toString().trim(),
+                myDB.addCliente(
+                        nombre.getText().toString().trim(),
                         apat.getText().toString().trim(),
                         amat.getText().toString().trim(),
                         fechaNac.getText().toString().trim(),
                         email.getText().toString().trim(),
                         tel.getText().toString().trim(),
                         rfc.getText().toString().trim());
-
-
 
                 Fragment agregarDireccionFragment = new AgregarDireccionFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

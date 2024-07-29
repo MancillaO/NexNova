@@ -46,24 +46,24 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String crearCliente = "CREATE TABLE " + TABLE_CLIENTE + "("
                 + CAMPO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + CAMPO_NOMBRE + "TEXT, "
-                + CAMPO_APAT + "TEXT, "
-                + CAMPO_AMAT + "TEXT, "
-                + CAMPO_FECHANAC + "TEXT, "
-                + CAMPO_EMAIL + "TEXT, "
-                + CAMPO_TEL + "TEXT, "
-                + CAMPO_RFC + "TEXT);";
+                + CAMPO_NOMBRE + " TEXT, "
+                + CAMPO_APAT + " TEXT, "
+                + CAMPO_AMAT + " TEXT, "
+                + CAMPO_FECHANAC + " TEXT, "
+                + CAMPO_EMAIL + " TEXT, "
+                + CAMPO_TEL + " TEXT, "
+                + CAMPO_RFC + " TEXT);";
         db.execSQL(crearCliente);
+
         Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
     }
 
     // Actualizar la base de datos, eliminar tabla si ya existe y crear de nuevo
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENTE);
         onCreate(db);
     }
-
 
     /****************** Metodos para manipular la tabla Cliente *********************************/
 
@@ -151,6 +151,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /********************************************************************************************/
+
 
 }
 
