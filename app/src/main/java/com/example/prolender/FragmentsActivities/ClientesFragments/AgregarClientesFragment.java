@@ -1,6 +1,10 @@
+// Esta clase seria la clase: AddActivity donde se van a agregar los datos del cliente
+
 package com.example.prolender.FragmentsActivities.ClientesFragments;
 
+
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
 
 import java.util.Calendar;
@@ -56,6 +61,19 @@ public class AgregarClientesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                // Crea una instancia de MyDatabaseHelper
+                MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+                // Inserta los datos del cliente para agregarlos a la base de datos
+                myDB.addCliente(nombre.getText().toString().trim(),
+                        apat.getText().toString().trim(),
+                        amat.getText().toString().trim(),
+                        fechaNac.getText().toString().trim(),
+                        email.getText().toString().trim(),
+                        tel.getText().toString().trim(),
+                        rfc.getText().toString().trim());
+
+
+
                 Fragment agregarDireccionFragment = new AgregarDireccionFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -94,5 +112,4 @@ public class AgregarClientesFragment extends Fragment {
 
         datePickerDialog.show();
     }
-
 }
