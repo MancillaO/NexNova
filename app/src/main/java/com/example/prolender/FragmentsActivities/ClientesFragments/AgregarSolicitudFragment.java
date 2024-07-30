@@ -51,7 +51,7 @@ public class AgregarSolicitudFragment extends Fragment {
 
                 // Inserta los datos del cliente para agregarlos a la base de datos
                 myDB.addSolicitud(
-                        id_solicitud.getText().toString().trim(),
+
                         id_cliente.getText().toString().trim(),
                         ocupacion.getText().toString().trim(),
                         campoFecha.getText().toString().trim(),

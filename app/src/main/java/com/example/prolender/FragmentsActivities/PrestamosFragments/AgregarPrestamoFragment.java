@@ -1,5 +1,4 @@
 package com.example.prolender.FragmentsActivities.PrestamosFragments;
-
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,53 +13,83 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.prolender.Database.MyDatabaseHelper;
+import com.example.prolender.FragmentsActivities.ClientesFragments.ClientesFragment;
 import com.example.prolender.R;
 
 import java.util.Calendar;
 
-public class VerSolicitudFragment extends Fragment {
+public class AgregarPrestamoFragment extends Fragment {
 
+    private EditText campoFechaC;
     private EditText campoFechaD;
-    private ImageView selectDateButton;
+    private ImageView selectDateButtonD;
+    private ImageView selectDateButtonC;
 
-    public VerSolicitudFragment() {
-        // Required empty public constructor
+    public AgregarPrestamoFragment(){
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_ver_solicitud, container, false);
 
-        Button btnRegistrar = view.findViewById(R.id.btnAprovar);
+        View view = inflater.inflate(R.layout.fragment_agregar_prestamo, container, false);
+
+        Button btnRegistrar = view.findViewById(R.id.btnRegistrar);
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment agregarPrestamos = new AgregarPrestamoFragment();
+
+                Fragment prestamosFragment = new PrestamosFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, agregarPrestamos);
+                fragmentTransaction.replace(R.id.frameLayout, prestamosFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
             }
         });
 
+        campoFechaC = view.findViewById(R.id.campoFechaC);
+        selectDateButtonC = view.findViewById(R.id.selectDateButtonC);
         campoFechaD = view.findViewById(R.id.campoFechaD);
-        selectDateButton = view.findViewById(R.id.selectDateButton);
+        selectDateButtonD = view.findViewById(R.id.selectDateButtonD);
 
-        selectDateButton.setOnClickListener(new View.OnClickListener() {
+        selectDateButtonC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDialog();
+                showDatePickerDialogC();
             }
         });
 
-
+        selectDateButtonD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialogD();
+            }
+        });
         return view;
     }
 
-    private void showDatePickerDialog() {
+    private void showDatePickerDialogC() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                // Update the EditText with the selected date
+                campoFechaC.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+            }
+        }, year, month, day);
+
+        datePickerDialog.show();
+    }
+
+    private void showDatePickerDialogD() {
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -76,4 +105,5 @@ public class VerSolicitudFragment extends Fragment {
 
         datePickerDialog.show();
     }
+
 }

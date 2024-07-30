@@ -90,7 +90,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String crearCliente = "CREATE TABLE " + TABLE_CLIENTE + "("
-                + CAMPO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + CAMPO_ID + " INTEGER PRIMARY KEY, "
                 + CAMPO_NOMBRE + " TEXT, "
                 + CAMPO_APAT + " TEXT, "
                 + CAMPO_AMAT + " TEXT, "
@@ -216,12 +216,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void addSolicitud(String id_solicitud, String id_cliente ,String ocupacion, String fecha, String monto, String ingresos) {
+    public void addSolicitud(String id_cliente ,String ocupacion, String fecha, String monto, String ingresos) {
         SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
         ContentValues cv = new ContentValues();  // Contenedor para los valores
 
         // Asigna los valores a los campos de la tabla
-        cv.put(CAMPO_ID_SOLICITUD, id_solicitud);
         cv.put(CAMPO_ID_CLIENTE, id_cliente);
         cv.put(CAMPO_OCUPACION, ocupacion);
         cv.put(CAMPO_FECHA_SOLICITUD, fecha);
@@ -349,6 +348,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /********************************************************************************************/
+
+    // MyDatabaseHelper.java
+    public Cursor getSolicitudById(String solicitudId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM solicitud WHERE id_solicitud = ?", new String[]{solicitudId});
+    }
 
 
 }

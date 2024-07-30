@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FragmentsActivities.ClientesFragments.AgregarSolicitudFragment">
+    tools:context=".AgregarPrestamoFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:text="Datos Personales"
+                android:text="Datos del prestamo"
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -55,53 +55,21 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/campoID_cliente"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/border_edittext_background"
-                    android:ems="10"
-                    android:hint="ID Cliente"
-                    android:inputType="number"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp"
-                    android:layout_marginTop="20dp"
-                    android:textColor="#1D2262" />
-
-
-
-                <EditText
-                    android:id="@+id/campoOcupacionSoli"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/border_edittext_background"
-                    android:ems="10"
-                    android:hint="Ocupación"
-                    android:inputType="text"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp"
-                    android:textColor="#1D2262"
-                    android:layout_marginTop="25dp"
-                    />
-
                 <LinearLayout
-                    android:id="@+id/layoutFecha"
+                    android:id="@+id/layoutFechaC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="25dp"
                     android:gravity="center_vertical">
 
                     <EditText
-                        android:id="@+id/campoFecha"
+                        android:id="@+id/campoFechaC"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight=".80"
                         android:background="@drawable/border_edittext_background"
                         android:ems="10"
-                        android:hint="dd/mm/aaaa"
+                        android:hint="Fecha de Corte"
                         android:inputType="date"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="12dp"
@@ -113,7 +81,7 @@
                         android:layout_weight="0.04" />
 
                     <ImageView
-                        android:id="@+id/selectDateButton"
+                        android:id="@+id/selectDateButtonC"
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight=".20"
@@ -124,33 +92,77 @@
 
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/campoMonto"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="25dp"
-                    android:background="@drawable/border_edittext_background"
-                    android:ems="10"
-                    android:hint="Monto Solicitado"
-                    android:inputType="number"
-                    android:paddingHorizontal="20dp"
-                    android:paddingVertical="12dp"
-                    android:textColor="#1D2262" />
 
                 <EditText
-                    android:id="@+id/campoIngreso"
+                    android:id="@+id/campoPlazo"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="25dp"
                     android:background="@drawable/border_edittext_background"
                     android:ems="10"
-                    android:hint="Ingreso Mensual"
-                    android:inputType="number"
+                    android:hint="Plazo de Pago"
+                    android:inputType="text"
                     android:paddingHorizontal="20dp"
                     android:paddingVertical="12dp"
+                    android:layout_marginTop="20dp"
                     android:textColor="#1D2262" />
+
+
+
+                <EditText
+                    android:id="@+id/campoMetodo"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="Metodo de Pago"
+                    android:inputType="text"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#1D2262"
+                    android:layout_marginTop="25dp"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/layoutFechaD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="25dp">
+
+                    <EditText
+                        android:id="@+id/campoFechaD"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".80"
+                        android:background="@drawable/border_edittext_background"
+                        android:ems="10"
+                        android:hint="Fecha de Deposito"
+                        android:inputType="date"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="12dp"
+                        android:textColor="#1D2262" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.04" />
+
+                    <ImageView
+                        android:id="@+id/selectDateButtonD"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".20"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/icon_calendar" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
         </ScrollView>
 
@@ -165,7 +177,7 @@
             android:backgroundTint="@color/primary_color"
             android:onClick="onClick"
             android:padding="12dp"
-            android:text="Registrar"
+            android:text="Continuar"
             android:textColor="#ffffff"
             android:textSize="16dp" />
     </RelativeLayout>

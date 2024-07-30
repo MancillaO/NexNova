@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VerSolicitudFragment">
+    tools:context=".FragmentsActivities.PrestamosFragments.VerSolicitudFragment">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#E9E9E9"
-        tools:context=".VerSolicitudFragment"
+        tools:context="..FragmentsActivities.PrestamosFragments.VerSolicitudFragment"
         >
 
         <RelativeLayout
@@ -161,12 +161,13 @@
                     android:layout_gravity="center"
                     />
 
-                <TextView
+                <EditText
                     android:id="@+id/campoMontoA"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
-                    android:text="Monto Aprovado"
+                    android:hint="Monto Aprovado"
+                    android:ems="10"
                     android:layout_marginTop="25dp"
                     android:textColor="#54555B"
                     android:paddingVertical="12dp"
@@ -175,12 +176,13 @@
                     android:layout_gravity="center"
                     />
 
-                <TextView
+                <EditText
                     android:id="@+id/campoDictamen"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
-                    android:text="Dictamen"
+                    android:hint="Dictamen"
+                    android:ems="10"
                     android:layout_marginTop="25dp"
                     android:textColor="#54555B"
                     android:paddingVertical="12dp"
@@ -189,24 +191,50 @@
                     android:layout_gravity="center"
                     />
 
-                <TextView
-                    android:id="@+id/campoFechaD"
-                    android:layout_width="300dp"
+                <LinearLayout
+                    android:id="@+id/layoutFecha"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:text="Fecha Dictamen"
-                    android:textColor="#54555B"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="20dp"
+                    android:orientation="horizontal"
                     android:layout_marginTop="25dp"
-                    android:background="@drawable/border_edittext_background"
-                    />
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/campoFechaD"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".80"
+                        android:background="@drawable/border_edittext_background"
+                        android:ems="10"
+                        android:hint="Fecha Dictamen"
+                        android:inputType="date"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="12dp"
+                        android:textColor="#1D2262" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.04" />
+
+                    <ImageView
+                        android:id="@+id/selectDateButton"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight=".20"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:onClick="onClick"
+                        android:src="@drawable/icon_calendar" />
+
+                </LinearLayout>
+
 
                 <Button
                     android:id="@+id/btnAprovar"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:text="Aprovar"
+                    android:text="Continuar"
                     android:onClick="onClick"
                     android:backgroundTint="@color/primary_color"
                     android:layout_centerHorizontal="true"
