@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
+    private String id_clienteDireccion;
+
     /************************ DATOS DE LA BASE DE DATOS *************************************/
 
     private Context context;
@@ -64,6 +66,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static String PLAZO_PAGO = "plazoPago";
     public static String METODO_PAGO = "metodoPago";
     public static String FECHA_DEPOSITO = "fechaDeposito";
+
+    // Tabla de Pagos
+    public static String TABLA_PAGO = "pago";
+    public static String ID_PAGO = "id_pago";
+    public static String ID_PRESTAMO_PAGO = "id_prestamoPago";
+    public static String NUM_PAGO = "numPago";
+    public static String FECHA_PAGO = "fechaPago";
+    public static String MONTO_PAGO = "montoPago";
+    public static String NUEVO_SALDO = "nuevoSaldo";
+    public static String MONTO_PAGADO = "montoPagado";
+
 
     /****************************************************************************************/
 
@@ -142,6 +155,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_PRESTAMO);
         onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_PAGO);
+        onCreate(db);
     }
 
     /****************** Métodos para manipular la tabla Cliente *********************************/
@@ -172,6 +187,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void addDireccion(String id_cliente, String calle, String numInt, String numExt, String colonia, String estado, String codigoPostal, String tpPropiedad) {
+        SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
+        ContentValues cv = new ContentValues();  // Contenedor para los valores
+
+        // Asigna los valores a los campos de la tabla
+        cv.put(ID_CLIENTE, id_clienteDireccion);
+        cv.put(CALLE, calle);
+        cv.put(NUM_INT, numInt);
+        cv.put(NUM_EXT, numExt);
+        cv.put(COLONIA, colonia);
+        cv.put(ESTADO, estado);
+        cv.put(CODIGO_POSTAL, codigoPostal);
+        cv.put(TIPO_PROPIEDAD, tpPropiedad);
+
+        // Inserta los valores en la tabla
+        long result = db.insert(TABLA_DIRECCION, null, cv);
+        Log.d("MyDatabaseHelper", "Insert result: " + result);
+
+        id_clienteDireccion = String.valueOf(result);
+
+        // Muestra un mensaje si la inserción fue exitosa o fallida
+        if (result == -1) {
+            Toast.makeText(context, "Registro Fallido "+id_clienteDireccion, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     public void addSolicitud(String id_solicitud, String id_cliente ,String ocupacion, String fecha, String monto, String ingresos) {
         SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
         ContentValues cv = new ContentValues();  // Contenedor para los valores
@@ -195,6 +239,55 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void addPrestamo(String id_prestamo, String id_solicitud, String montoPrestamo, String fechaCortr, String plazoPago, String metodoPago, String fechaDeposito) {
+        SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
+        ContentValues cv = new ContentValues();  // Contenedor para los valores
+
+        // Asigna los valores a los campos de la tabla
+        cv.put(ID_PRESTAMO, id_prestamo);
+        cv.put(ID_SOLICITUD, id_solicitud);
+        cv.put(MONTO_PRESTAMO, montoPrestamo);
+        cv.put(FECHA_CORTR, fechaCortr);
+
+        // Inserta los valores en la tabla
+        long result = db.insert(TABLA_PRESTAMO, null, cv);
+        Log.d("MyDatabaseHelper", "Insert result: " + result);
+
+        // Muestra un mensaje si la inserción fue exitosa o fallida
+        if (result == -1) {
+            Toast.makeText(context, "Registro Fallido ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addPago(String id_pago, String id_prestamoPago, String numPago, String fechaPago, String montoPago, String nuevoSaldo, String montoPagado) {
+        SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
+        ContentValues cv = new ContentValues();  // Contenedor para los valores
+
+        // Asigna los valores a los campos de la tabla
+        cv.put(ID_PAGO, id_pago);
+        cv.put(ID_PRESTAMO_PAGO, id_prestamoPago);
+        cv.put(NUM_PAGO, numPago);
+        cv.put(FECHA_PAGO, fechaPago);
+        cv.put(MONTO_PAGO, montoPago);
+        cv.put(NUEVO_SALDO, nuevoSaldo);
+        cv.put(MONTO_PAGADO, montoPagado);
+
+        // Inserta los valores en la tabla
+        long result = db.insert(TABLA_PAGO, null, cv);
+        Log.d("MyDatabaseHelper", "Insert result: " + result);
+
+        // Muestra un mensaje si la inserción fue exitosa
+        if (result == -1) {
+            Toast.makeText(context, "Registro Fallido ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     // Método para leer todos los datos de la base de datos
     public Cursor readAllData() {
