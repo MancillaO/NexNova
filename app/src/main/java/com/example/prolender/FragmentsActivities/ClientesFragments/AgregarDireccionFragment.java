@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
 
 public class AgregarDireccionFragment extends Fragment {
@@ -39,6 +40,22 @@ public class AgregarDireccionFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
+
+                // Crea una instancia de MyDatabaseHelper
+                MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+
+                // Inserta los datos de la dirección para agregarlos a la base de datos
+                myDB.addDireccion(
+                        calle.getText().toString().trim(),
+                        numInt.getText().toString().trim(),
+                        numExt.getText().toString().trim(),
+                        colonia.getText().toString().trim(),
+                        estado.getText().toString().trim(),
+                        cp.getText().toString().trim(),
+                        tpPropi.getText().toString().trim());
+
+
+
 
                 Fragment clientesFragment = new ClientesFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
