@@ -56,19 +56,11 @@ public class AgregarClientesFragment extends Fragment {
         rfc = view.findViewById(R.id.campoRFC);
         campoFecha = view.findViewById(R.id.campoFecha);
         selectDateButton = view.findViewById(R.id.selectDateButton);
-        selectImageButton = view.findViewById(R.id.imageViewFoto);
 
         selectDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
-            }
-        });
-
-        selectImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImageChooser();
             }
         });
 
@@ -121,11 +113,6 @@ public class AgregarClientesFragment extends Fragment {
         }, year, month, day);
 
         datePickerDialog.show();
-    }
-
-    private void openImageChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
