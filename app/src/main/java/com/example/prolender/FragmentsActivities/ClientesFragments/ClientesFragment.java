@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.prolender.Database.CustomAdapter;
@@ -50,9 +51,7 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
         //btnDetalles = view.findViewById(R.id.txtDetalles1);
         //btnDetalles.setOnClickListener(this);
 
-        /*
-        recyclerView = view.findViewById(R.id.recyclerView);
-        myDB = new MyDatabaseHelper(ClientesFragment.this);
+        myDB = new MyDatabaseHelper(getActivity());
 
         id = new ArrayList<>();
         nombre = new ArrayList<>();
@@ -65,14 +64,18 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
         image = new ArrayList<>();
 
         storeDataInArrays();
-        */
+
+        customAdapter = new CustomAdapter(getActivity(), id, nombre, apat, amat, fecha, email, tel, rfc, image);
+        recyclerView.setAdapter(customAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return view;
     }
 
     void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
-            //Toast.makeText(ClientesFragment.this, "No hay datos", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(GetActivity(), "No hay datos", Toast.LENGTH_SHORT).show();
         } else {
             while (cursor.moveToNext()){
                 id.add(cursor.getString(0));

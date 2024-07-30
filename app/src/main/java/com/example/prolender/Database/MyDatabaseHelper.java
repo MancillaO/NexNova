@@ -286,8 +286,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
-
     // Método para leer todos los datos de la base de datos
     public Cursor readAllData() {
         String query = "SELECT * FROM " + TABLE_CLIENTE;  // Consulta SQL para seleccionar todos los datos
