@@ -33,12 +33,36 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String CAMPO_RFC = "rfc";
     private static final String CAMPO_IMAGEN = "imagen"; // Nuevo campo para la imagen
 
+    // Tabla de direcciones
+    public static String TABLA_DIRECCION = "direccion";
+    public static String ID_DIRECCION = "id_direccion";
+    public static String ID_CLIENTE = "id_cliente";
+    public static String CALLE = "calle";
+    public static String NUM_INT = "numInt";
+    public static String NUM_EXT = "numExt";
+    public static String COLONIA = "colonia";
+    public static String ESTADO = "estado";
+    public static String CODIGO_POSTAL = "codigoPostal";
+    public static String TIPO_PROPIEDAD = "tpPropiedad";
+
+
+    // Tabla de solicitudes
     private static final String TABLE_SOLICITUD = "solicitud";
     private static final String CAMPO_ID_SOLICITUD = "id_solicitud";
     private static final String CAMPO_OCUPACION = "ocupacion";
     private static final String CAMPO_FECHA_SOLICITUD = "fecha_solicitud";
     private static final String CAMPO_MONTO = "monto";
     private static final String CAMPO_INGRESOS = "ingreso";
+
+    // Tabla de prestamos
+    public static String TABLA_PRESTAMO = "prestamo";
+    public static String ID_PRESTAMO = "id_prestamo";
+    public static String ID_SOLICITUD = "id_solicitud";
+    public static String MONTO_PRESTAMO = "montoPrestamo";
+    public static String FECHA_CORTR = "fechaCortr";
+    public static String PLAZO_PAGO = "plazoPago";
+    public static String METODO_PAGO = "metodoPago";
+    public static String FECHA_DEPOSITO = "fechaDeposito";
 
     /****************************************************************************************/
 
@@ -65,6 +89,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
 
+        String crearDireccion = "CREATE TABLE " + TABLA_DIRECCION + "("
+                + ID_DIRECCION + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_CLIENTE + " INTEGER, "
+                + CALLE + " TEXT, "
+                + NUM_INT + " TEXT, "
+                + NUM_EXT + " TEXT, "
+                + COLONIA + " TEXT, "
+                + ESTADO + " TEXT, "
+                + CODIGO_POSTAL + " TEXT, "
+                + TIPO_PROPIEDAD + " TEXT);";
+
+        db.execSQL(crearDireccion);
+        Log.d("MyDatabaseHelper", "Table created: " + crearDireccion);
+
+
         String crearSolicitud = "CREATE TABLE " + TABLE_SOLICITUD + "("
                 + CAMPO_ID_SOLICITUD + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + CAMPO_OCUPACION + " TEXT, "
@@ -74,6 +113,20 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(crearSolicitud);
 
         Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
+
+        String crearPrestamo = "CREATE TABLE " + TABLA_PRESTAMO + "("
+                + ID_PRESTAMO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ID_SOLICITUD + " INTEGER, "
+                + MONTO_PRESTAMO + " TEXT, "
+                + FECHA_CORTR + " TEXT, "
+                + PLAZO_PAGO + " TEXT, "
+                + METODO_PAGO + " TEXT, "
+                + FECHA_DEPOSITO + " TEXT);";
+        db.execSQL(crearPrestamo);
+
+        Log.d("MyDatabaseHelper", "Table created: " + crearPrestamo);
+
+
     }
 
     // Actualizar la base de datos, eliminar tabla si ya existe y crear de nuevo
@@ -81,7 +134,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENTE);
         onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_DIRECCION);
+        onCreate(db);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOLICITUD);
+        onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_PRESTAMO);
         onCreate(db);
     }
 
