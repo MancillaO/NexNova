@@ -23,7 +23,7 @@ public class AgregarSolicitudFragment extends Fragment {
 
     private EditText campoFecha;
     private ImageView selectDateButton;
-    EditText ocupacion, montoSoli, ingreso, id_solicitud;
+    EditText ocupacion, montoSoli, ingreso, id_solicitud, id_cliente;
 
     public AgregarSolicitudFragment() {
         // Required empty public constructor
@@ -36,6 +36,7 @@ public class AgregarSolicitudFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_agregar_solicitud, container, false);
 
         id_solicitud = view.findViewById(R.id.campoID);
+        id_cliente = view.findViewById(R.id.campoID_cliente);
         ocupacion = view.findViewById(R.id.campoOcupacionSoli);
         montoSoli = view.findViewById(R.id.campoMonto);
         ingreso = view.findViewById(R.id.campoIngreso);
@@ -51,6 +52,7 @@ public class AgregarSolicitudFragment extends Fragment {
                 // Inserta los datos del cliente para agregarlos a la base de datos
                 myDB.addSolicitud(
                         id_solicitud.getText().toString().trim(),
+                        id_cliente.getText().toString().trim(),
                         ocupacion.getText().toString().trim(),
                         campoFecha.getText().toString().trim(),
                         montoSoli.getText().toString().trim(),
