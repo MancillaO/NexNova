@@ -35,6 +35,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_SOLICITUD = "solicitud";
     private static final String CAMPO_ID_SOLICITUD = "id_solicitud";
+    private static final String CAMPO_ID_CLIENTE = "id_cliente";
     private static final String CAMPO_OCUPACION = "ocupacion";
     private static final String CAMPO_FECHA_SOLICITUD = "fecha_solicitud";
     private static final String CAMPO_MONTO = "monto";
@@ -67,6 +68,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         String crearSolicitud = "CREATE TABLE " + TABLE_SOLICITUD + "("
                 + CAMPO_ID_SOLICITUD + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + CAMPO_ID_CLIENTE + " INTEGER, "
                 + CAMPO_OCUPACION + " TEXT, "
                 + CAMPO_FECHA_SOLICITUD + " TEXT, "
                 + CAMPO_MONTO + " TEXT, "
@@ -113,12 +115,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addSolicitud(String id_cliente, String ocupacion, String fecha, String monto, String ingresos) {
+    public void addSolicitud(String id_solicitud, String id_cliente ,String ocupacion, String fecha, String monto, String ingresos) {
         SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
         ContentValues cv = new ContentValues();  // Contenedor para los valores
 
         // Asigna los valores a los campos de la tabla
-        cv.put(CAMPO_ID_SOLICITUD, id_cliente);
+        cv.put(CAMPO_ID_SOLICITUD, id_solicitud);
+        cv.put(CAMPO_ID_CLIENTE, id_cliente);
         cv.put(CAMPO_OCUPACION, ocupacion);
         cv.put(CAMPO_FECHA_SOLICITUD, fecha);
         cv.put(CAMPO_MONTO, monto);
