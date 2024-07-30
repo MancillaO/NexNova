@@ -187,7 +187,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addDireccion(String id_cliente, String calle, String numInt, String numExt, String colonia, String estado, String codigoPostal, String tpPropiedad) {
+    public void addDireccion(String calle, String numInt, String numExt, String colonia, String estado, String codigoPostal, String tpPropiedad) {
         SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
         ContentValues cv = new ContentValues();  // Contenedor para los valores
 
