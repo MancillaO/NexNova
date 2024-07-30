@@ -1,11 +1,14 @@
-// Esta clase seria la clase: AddActivity donde se van a agregar los datos del cliente
-
 package com.example.prolender.FragmentsActivities.ClientesFragments;
-
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +26,17 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.Calendar;
 
 public class AgregarClientesFragment extends Fragment {
+
     EditText nombre, apat, amat, fechaNac, email, tel, rfc;
     private EditText campoFecha;
-    private ImageView selectDateButton;
+    private ImageView selectDateButton, selectImageButton;
+    private Bitmap selectedImageBitmap;
+    private static final int PICK_IMAGE_REQUEST = 1;
 
     public AgregarClientesFragment() {
         // Required empty public constructor
@@ -48,11 +56,19 @@ public class AgregarClientesFragment extends Fragment {
         rfc = view.findViewById(R.id.campoRFC);
         campoFecha = view.findViewById(R.id.campoFecha);
         selectDateButton = view.findViewById(R.id.selectDateButton);
+        selectImageButton = view.findViewById(R.id.imageViewFoto);
 
         selectDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
+            }
+        });
+
+        selectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openImageChooser();
             }
         });
 
@@ -63,6 +79,9 @@ public class AgregarClientesFragment extends Fragment {
 
                 // Crea una instancia de MyDatabaseHelper
                 MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+                // Convierte la imagen seleccionada a un array de bytes
+                byte[] imagenBytes = convertImageToBytes(selectedImageBitmap);
+
                 // Inserta los datos del cliente para agregarlos a la base de datos
                 myDB.addCliente(
                         nombre.getText().toString().trim(),
@@ -71,7 +90,8 @@ public class AgregarClientesFragment extends Fragment {
                         fechaNac.getText().toString().trim(),
                         email.getText().toString().trim(),
                         tel.getText().toString().trim(),
-                        rfc.getText().toString().trim());
+                        rfc.getText().toString().trim(),
+                        imagenBytes);  // Pasa la imagen en formato de bytes
 
                 Fragment agregarDireccionFragment = new AgregarDireccionFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -80,15 +100,6 @@ public class AgregarClientesFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
 
-            }
-        });
-
-        LinearLayout btnSelectPhoto = view.findViewById(R.id.foto);
-        btnSelectPhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "Seleccionar foto", Toast.LENGTH_SHORT).show();
-                //TODO: Remplazar el toast por el codigo para guardar la foto de perfil
             }
         });
 
@@ -110,5 +121,34 @@ public class AgregarClientesFragment extends Fragment {
         }, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    private void openImageChooser() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            try {
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(imageUri);
+                selectedImageBitmap = BitmapFactory.decodeStream(inputStream);
+                selectImageButton.setImageBitmap(selectedImageBitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private byte[] convertImageToBytes(Bitmap bitmap) {
+        if (bitmap != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            return byteArrayOutputStream.toByteArray();
+        }
+        return null;
     }
 }

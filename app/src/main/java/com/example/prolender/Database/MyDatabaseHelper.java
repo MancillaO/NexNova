@@ -31,17 +31,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String CAMPO_EMAIL = "email";
     private static final String CAMPO_TEL = "tel";
     private static final String CAMPO_RFC = "rfc";
-
+    private static final String CAMPO_IMAGEN = "imagen"; // Nuevo campo para la imagen
 
     /****************************************************************************************/
 
-    //  Constructor de la clase
+    // Constructor de la clase
     public MyDatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
 
-    // Metodo para crear las tablas
+    // Método para crear las tablas
     @Override
     public void onCreate(SQLiteDatabase db) {
         String crearCliente = "CREATE TABLE " + TABLE_CLIENTE + "("
@@ -52,10 +52,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + CAMPO_FECHANAC + " TEXT, "
                 + CAMPO_EMAIL + " TEXT, "
                 + CAMPO_TEL + " TEXT, "
-                + CAMPO_RFC + " TEXT);";
+                + CAMPO_RFC + " TEXT, "
+                + CAMPO_IMAGEN + " BLOB);"; // Añadir el campo de imagen como BLOB
         db.execSQL(crearCliente);
 
         Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
+
+        String crea
     }
 
     // Actualizar la base de datos, eliminar tabla si ya existe y crear de nuevo
@@ -65,9 +68,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    /****************** Metodos para manipular la tabla Cliente *********************************/
+    /****************** Métodos para manipular la tabla Cliente *********************************/
 
-    public void addCliente(String nombre, String apat, String amat, String fecha, String email, String tel, String rfc) {
+    public void addCliente(String nombre, String apat, String amat, String fecha, String email, String tel, String rfc, byte[] imagen) {
         SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
         ContentValues cv = new ContentValues();  // Contenedor para los valores
 
@@ -79,6 +82,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(CAMPO_EMAIL, email);
         cv.put(CAMPO_TEL, tel);
         cv.put(CAMPO_RFC, rfc);
+        cv.put(CAMPO_IMAGEN, imagen); // Añadir la imagen
 
         // Inserta los valores en la tabla
         long result = db.insert(TABLE_CLIENTE, null, cv);
@@ -93,7 +97,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Método para leer todos los datos de la base de datos
-    Cursor readAllData() {
+    public Cursor readAllData() {
         String query = "SELECT * FROM " + TABLE_CLIENTE;  // Consulta SQL para seleccionar todos los datos
         SQLiteDatabase db = this.getReadableDatabase();   // Obtiene la base de datos en modo lectura
 
@@ -105,7 +109,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Método para actualizar un registro de la base de datos
-    public void UpdateData(String row_id, String nombre, String apat, String amat, String fecha, String email, String tel, String rfc) {
+    public void UpdateData(String row_id, String nombre, String apat, String amat, String fecha, String email, String tel, String rfc, byte[] imagen) {
         SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
         ContentValues cv = new ContentValues(); // Contenedor para los valores
 
@@ -117,6 +121,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(CAMPO_EMAIL, email);
         cv.put(CAMPO_TEL, tel);
         cv.put(CAMPO_RFC, rfc);
+        cv.put(CAMPO_IMAGEN, imagen); // Añadir la imagen
 
         // Actualiza el registro en la base de datos y obtiene el resultado
         long result = db.update(TABLE_CLIENTE, cv, "id_cliente=?", new String[]{row_id});
@@ -129,8 +134,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // // Método para eliminar un registro de la base de datos
-   public void deleteOneRow(String row_id) {
+    // Método para eliminar un registro de la base de datos
+    public void deleteOneRow(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
 
         // Elimina el registro y obtiene el resultado
@@ -154,5 +159,3 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
 }
-
-

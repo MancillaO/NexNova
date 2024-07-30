@@ -1,18 +1,24 @@
 package com.example.prolender.FragmentsActivities.ClientesFragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prolender.Database.CustomAdapter;
+import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
+
+import java.util.ArrayList;
 
 public class ClientesFragment extends Fragment implements View.OnClickListener {
 
@@ -20,6 +26,11 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
     private LinearLayout btnAgregarS;
     private TextView btnDetalles;
     RecyclerView recyclerView;
+
+    MyDatabaseHelper myDB;
+    ArrayList<String> id, nombre, apat, amat, fecha, email, tel, rfc, image;
+    CustomAdapter customAdapter;
+
 
 
     public ClientesFragment() {
@@ -38,7 +49,43 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
         btnAgregarS.setOnClickListener(this);
         //btnDetalles = view.findViewById(R.id.txtDetalles1);
         //btnDetalles.setOnClickListener(this);
+
+        /*
+        recyclerView = view.findViewById(R.id.recyclerView);
+        myDB = new MyDatabaseHelper(ClientesFragment.this);
+
+        id = new ArrayList<>();
+        nombre = new ArrayList<>();
+        apat = new ArrayList<>();
+        amat = new ArrayList<>();
+        fecha = new ArrayList<>();
+        email = new ArrayList<>();
+        tel = new ArrayList<>();
+        rfc = new ArrayList<>();
+        image = new ArrayList<>();
+
+        storeDataInArrays();
+        */
         return view;
+    }
+
+    void storeDataInArrays() {
+        Cursor cursor = myDB.readAllData();
+        if (cursor.getCount() == 0) {
+            //Toast.makeText(ClientesFragment.this, "No hay datos", Toast.LENGTH_SHORT).show();
+        } else {
+            while (cursor.moveToNext()){
+                id.add(cursor.getString(0));
+                nombre.add(cursor.getString(1));
+                apat.add(cursor.getString(2));
+                amat.add(cursor.getString(3));
+                fecha.add(cursor.getString(4));
+                email.add(cursor.getString(5));
+                tel.add(cursor.getString(6));
+                rfc.add(cursor.getString(7));
+                image.add(cursor.getString(8));
+            }
+        }
     }
 
     @Override
