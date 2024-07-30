@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
 
 import java.util.Calendar;
@@ -22,7 +23,7 @@ public class AgregarSolicitudFragment extends Fragment {
 
     private EditText campoFecha;
     private ImageView selectDateButton;
-    EditText ocupacion, montoSoli, ingreso;
+    EditText ocupacion, montoSoli, ingreso, id_solicitud;
 
     public AgregarSolicitudFragment() {
         // Required empty public constructor
@@ -34,6 +35,7 @@ public class AgregarSolicitudFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_agregar_solicitud, container, false);
 
+        id_solicitud = view.findViewById(R.id.campoID);
         ocupacion = view.findViewById(R.id.campoOcupacionSoli);
         montoSoli = view.findViewById(R.id.campoMonto);
         ingreso = view.findViewById(R.id.campoIngreso);
@@ -42,6 +44,18 @@ public class AgregarSolicitudFragment extends Fragment {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+                // Convierte la imagen seleccionada a un array de bytes
+
+                // Inserta los datos del cliente para agregarlos a la base de datos
+                myDB.addSolicitud(
+                        id_solicitud.getText().toString().trim(),
+                        ocupacion.getText().toString().trim(),
+                        campoFecha.getText().toString().trim(),
+                        montoSoli.getText().toString().trim(),
+                        ingreso.getText().toString().trim());
+
 
                 Fragment clientesFragment = new ClientesFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

@@ -33,6 +33,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String CAMPO_RFC = "rfc";
     private static final String CAMPO_IMAGEN = "imagen"; // Nuevo campo para la imagen
 
+    private static final String TABLE_SOLICITUD = "solicitud";
+    private static final String CAMPO_ID_SOLICITUD = "id_solicitud";
+    private static final String CAMPO_OCUPACION = "ocupacion";
+    private static final String CAMPO_FECHA_SOLICITUD = "fecha_solicitud";
+    private static final String CAMPO_MONTO = "monto";
+    private static final String CAMPO_INGRESOS = "ingreso";
+
     /****************************************************************************************/
 
     // Constructor de la clase
@@ -58,13 +65,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
 
-        String crea
+        String crearSolicitud = "CREATE TABLE " + TABLE_SOLICITUD + "("
+                + CAMPO_ID_SOLICITUD + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + CAMPO_OCUPACION + " TEXT, "
+                + CAMPO_FECHA_SOLICITUD + " TEXT, "
+                + CAMPO_MONTO + " TEXT, "
+                + CAMPO_INGRESOS + " TEXT);";
+        db.execSQL(crearSolicitud);
+
+        Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
     }
 
     // Actualizar la base de datos, eliminar tabla si ya existe y crear de nuevo
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENTE);
+        onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOLICITUD);
         onCreate(db);
     }
 
@@ -86,6 +103,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         // Inserta los valores en la tabla
         long result = db.insert(TABLE_CLIENTE, null, cv);
+        Log.d("MyDatabaseHelper", "Insert result: " + result);
+
+        // Muestra un mensaje si la inserción fue exitosa o fallida
+        if (result == -1) {
+            Toast.makeText(context, "Registro Fallido ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addSolicitud(String id_cliente, String ocupacion, String fecha, String monto, String ingresos) {
+        SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
+        ContentValues cv = new ContentValues();  // Contenedor para los valores
+
+        // Asigna los valores a los campos de la tabla
+        cv.put(CAMPO_ID_SOLICITUD, id_cliente);
+        cv.put(CAMPO_OCUPACION, ocupacion);
+        cv.put(CAMPO_FECHA_SOLICITUD, fecha);
+        cv.put(CAMPO_MONTO, monto);
+        cv.put(CAMPO_INGRESOS, ingresos);
+
+        // Inserta los valores en la tabla
+        long result = db.insert(TABLE_SOLICITUD, null, cv);
         Log.d("MyDatabaseHelper", "Insert result: " + result);
 
         // Muestra un mensaje si la inserción fue exitosa o fallida
