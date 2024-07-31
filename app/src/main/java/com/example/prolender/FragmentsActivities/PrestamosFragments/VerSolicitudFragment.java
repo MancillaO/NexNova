@@ -1,79 +1,79 @@
 package com.example.prolender.FragmentsActivities.PrestamosFragments;
 
-import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
-
-import java.util.Calendar;
 
 public class VerSolicitudFragment extends Fragment {
 
-    private EditText campoFechaD;
-    private ImageView selectDateButton;
+    private MyDatabaseHelper myDatabaseHelper;
+    private EditText editextBuscar;
+    private ImageView buscarClienteIcon;
+    private TextView textViewOcupacion, textViewFecha, textViewMonto, textViewIngreso;
 
-    public VerSolicitudFragment() {
-        // Required empty public constructor
-    }
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ver_solicitud, container, false);
 
-        Button btnRegistrar = view.findViewById(R.id.btnAprovar);
-        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+        // Inicializar MyDatabaseHelper
+        myDatabaseHelper = new MyDatabaseHelper(getContext());
+
+        // Inicializar vistas
+        editextBuscar = view.findViewById(R.id.editextBuscar);
+        buscarClienteIcon = view.findViewById(R.id.buscar_cliente_icon);
+        textViewOcupacion = view.findViewById(R.id.campoOcupacion);
+        textViewFecha = view.findViewById(R.id.campoFecha);
+        textViewMonto = view.findViewById(R.id.campoMontoS);
+        textViewIngreso = view.findViewById(R.id.campoIngreso);
+
+        // Configurar el click listener para el ImageView
+        buscarClienteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment agregarPrestamos = new AgregarPrestamoFragment();
-                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frameLayout, agregarPrestamos);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                buscarSolicitud();
             }
         });
-
-        campoFechaD = view.findViewById(R.id.campoFechaD);
-        selectDateButton = view.findViewById(R.id.selectDateButton);
-
-        selectDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
-
 
         return view;
     }
 
-    private void showDatePickerDialog() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+    private void buscarSolicitud() {
+        String solicitudId = editextBuscar.getText().toString().trim();
+        if (!solicitudId.isEmpty()) {
+            Cursor cursor = myDatabaseHelper.getSolicitudById(solicitudId);
+            if (cursor != null && cursor.moveToFirst()) {
+                // Obtener datos de la solicitud
+                String ocupacion = cursor.getString(cursor.getColumnIndex("ocupacion"));
+                String fecha = cursor.getString(cursor.getColumnIndex("fecha_solicitud"));
+                String monto = cursor.getString(cursor.getColumnIndex("monto"));
+                String ingresos = cursor.getString(cursor.getColumnIndex("ingreso"));
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // Update the EditText with the selected date
-                campoFechaD.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                // Mostrar datos en los TextView
+                textViewOcupacion.setText(ocupacion);
+                textViewFecha.setText(fecha);
+                textViewMonto.setText(monto);
+                textViewIngreso.setText(ingresos);
+
+                cursor.close();
+            } else {
+                Toast.makeText(getContext(), "Solicitud no encontrada", Toast.LENGTH_SHORT).show();
             }
-        }, year, month, day);
-
-        datePickerDialog.show();
+        } else {
+            Toast.makeText(getContext(), "Por favor ingrese un ID de solicitud", Toast.LENGTH_SHORT).show();
+        }
     }
 }

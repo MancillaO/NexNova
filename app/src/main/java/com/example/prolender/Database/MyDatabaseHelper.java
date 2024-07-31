@@ -363,7 +363,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     // MyDatabaseHelper.java
     public Cursor getSolicitudById(String solicitudId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM solicitud WHERE id_solicitud = ?", new String[]{solicitudId});
+        String query = "SELECT ocupacion, fecha_solicitud, monto, ingreso FROM " + TABLE_SOLICITUD + " WHERE id_solicitud = ?";
+        return db.rawQuery(query, new String[]{solicitudId});
     }
 
     public Cursor getClientById(String id) {

@@ -170,7 +170,7 @@
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="TP Propiedad"
+                    android:hint="Tipo de Propiedad"
                     android:layout_marginTop="25dp"
                     android:inputType="text"
                     android:textColor="#534B85"

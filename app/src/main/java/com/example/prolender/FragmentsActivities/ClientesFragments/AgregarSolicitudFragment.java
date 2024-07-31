@@ -35,7 +35,7 @@ public class AgregarSolicitudFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_agregar_solicitud, container, false);
 
-        id_solicitud = view.findViewById(R.id.campoID);
+        
         id_cliente = view.findViewById(R.id.campoID_cliente);
         ocupacion = view.findViewById(R.id.campoOcupacionSoli);
         montoSoli = view.findViewById(R.id.campoMonto);
