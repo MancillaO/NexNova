@@ -398,7 +398,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Guardado", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -411,33 +411,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             dialog.show();
         }
     }
-
-
-
-    /*
-    public void alertAprobado() {
-        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
-        View view = LayoutInflater.from(context).inflate(R.layout.aprovado_dialog, successConstraintLayout);
-        Button aprovadoDone = view.findViewById(R.id.aprovadoDone);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-
-        aprovadoDone.findViewById(R.id.aprovadoDone).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-                Toast.makeText(context,"Done",Toast.LENGTH_SHORT).show();
-            }
-        });
-        if(alertDialog.getWindow() != null){
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        }
-        alertDialog.show();
-    }
-
-     */
 
     /****************************************************************************************/
 

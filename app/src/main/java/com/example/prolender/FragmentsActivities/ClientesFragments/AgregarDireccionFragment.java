@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,7 +25,6 @@ public class AgregarDireccionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_agregar_direccion, container, false);
 
         calle = view.findViewById(R.id.campoCalle);
@@ -37,25 +37,59 @@ public class AgregarDireccionFragment extends Fragment {
 
         Button btnRegistrar = view.findViewById(R.id.btnRegistrar);
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+                // Obtiene los datos de los campos
+                String calleStr = calle.getText().toString().trim();
+                String numIntStr = numInt.getText().toString().trim();
+                String numExtStr = numExt.getText().toString().trim();
+                String coloniaStr = colonia.getText().toString().trim();
+                String estadoStr = estado.getText().toString().trim();
+                String cpStr = cp.getText().toString().trim();
+                String tpPropiStr = tpPropi.getText().toString().trim();
+
+                // Valida los campos vacíos
+                if (calleStr.isEmpty() || numIntStr.isEmpty() || numExtStr.isEmpty() ||
+                        coloniaStr.isEmpty() || estadoStr.isEmpty() || cpStr.isEmpty() || tpPropiStr.isEmpty()) {
+                    Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Valida que numInt y numExt solo contengan números
+                if (!numIntStr.matches("\\d+")) {
+                    Toast.makeText(getContext(), "El campo Número Interior solo debe contener números", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!numExtStr.matches("\\d+")) {
+                    Toast.makeText(getContext(), "El campo Número Exterior solo debe contener números", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Valida que estado solo contenga letras
+                if (!estadoStr.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                    Toast.makeText(getContext(), "El campo Estado solo debe contener letras", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Valida que tpPropi solo pueda ser "propia" o "renta"
+                if (!tpPropiStr.equalsIgnoreCase("propia") && !tpPropiStr.equalsIgnoreCase("alquilada")) {
+                    Toast.makeText(getContext(), "El campo Tipo de Propiedad solo puede ser 'propia' o 'renta'", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // Crea una instancia de MyDatabaseHelper
                 MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
 
                 // Inserta los datos de la dirección para agregarlos a la base de datos
                 myDB.addDireccion(
-                        calle.getText().toString().trim(),
-                        numInt.getText().toString().trim(),
-                        numExt.getText().toString().trim(),
-                        colonia.getText().toString().trim(),
-                        estado.getText().toString().trim(),
-                        cp.getText().toString().trim(),
-                        tpPropi.getText().toString().trim());
-
-
-
+                        calleStr,
+                        numIntStr,
+                        numExtStr,
+                        coloniaStr,
+                        estadoStr,
+                        cpStr,
+                        tpPropiStr);
 
                 Fragment clientesFragment = new ClientesFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -68,5 +102,4 @@ public class AgregarDireccionFragment extends Fragment {
 
         return view;
     }
-
 }

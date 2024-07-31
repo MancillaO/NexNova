@@ -37,6 +37,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view) {
+        String usuario = edtU.getText().toString(); // Obtiene el nombre de usuario ingresado
+        String contraseña = edtC.getText().toString(); // Obtiene la contraseña ingresada
+
+        // Verifica si el usuario es válido
+        if (Usuario.esUsuarioValido(this, usuario, contraseña)) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent); // Inicia la actividad de la página de inicio
+            finish(); // Finaliza la actividad actual
+        } else {
+            // Muestra un mensaje de error si las credenciales son incorrectas
+            Toast.makeText(this, "Usuario o Contraseña incorrectos", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    /*
+    public void onLoginClick(View view) {
         String usuario = edtU.getText().toString();
         String contraseña = edtC.getText().toString();
 
@@ -48,4 +65,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Usuario o Contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
     }
+
+     */
 }
