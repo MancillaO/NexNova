@@ -318,7 +318,6 @@
                         android:textStyle="italic"
                         android:clickable="true"
                         android:onClick="onClick"/>
-
                 </RelativeLayout>
 
                 <RelativeLayout

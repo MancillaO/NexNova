@@ -1,24 +1,18 @@
 package com.example.prolender.Database;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.prolender.FragmentsActivities.ClientesFragments.DetallesClienteFragment;
 import com.example.prolender.R;
 
 import java.util.ArrayList;
@@ -37,7 +31,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                          ArrayList email,
                          ArrayList tel,
                          ArrayList rfc,
-                         ArrayList image){
+                         ArrayList image) {
         this.context = context;
         this.id = id;
         this.nombre = nombre;
@@ -48,23 +42,39 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         this.tel = tel;
         this.rfc = rfc;
         this.image = image;
-
     }
 
     @NonNull
     @Override
-    public CustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_cliente, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.id_text.setText(String.valueOf(id.get(position)));
-        holder.nombre_text.setText(String.valueOf(nombre.get(position)));
+        String nombreCompleto = nombre.get(position) + " " + apat.get(position) + " " + amat.get(position);
+        holder.nombre_text.setText(nombreCompleto);
         holder.email_text.setText(String.valueOf(email.get(position)));
         holder.tel_text.setText(String.valueOf(tel.get(position)));
+
+        // Manejar el clic en el TextView de detalles
+        holder.detalles_text.setOnClickListener(v -> {
+            // Crear el fragmento con los detalles del cliente
+            DetallesClienteFragment detallesFragment = DetallesClienteFragment.newInstance(
+                    String.valueOf(id.get(position)),
+                    nombreCompleto // Puedes agregar más datos si es necesario
+            );
+
+            // Reemplazar el fragmento actual con el nuevo fragmento
+            ((FragmentActivity) context).getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frameLayout, detallesFragment) // Cambia el contenedor si es necesario
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 
     @Override
@@ -73,7 +83,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView id_text, nombre_text, apat_text, amat_text, fecha_text, email_text, tel_text, rfc_text;
+        TextView id_text, nombre_text, email_text, tel_text, detalles_text;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,7 +91,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             nombre_text = itemView.findViewById(R.id.cliente_titulo);
             email_text = itemView.findViewById(R.id.txtCorreo);
             tel_text = itemView.findViewById(R.id.txtTelefono);
-
+            detalles_text = itemView.findViewById(R.id.txtDetalles); // Añadir txtDetalles
         }
     }
 }

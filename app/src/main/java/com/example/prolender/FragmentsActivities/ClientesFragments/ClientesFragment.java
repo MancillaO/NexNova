@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -21,35 +19,29 @@ import com.example.prolender.R;
 
 import java.util.ArrayList;
 
-public class ClientesFragment extends Fragment implements View.OnClickListener {
+public class ClientesFragment extends Fragment {
 
     private LinearLayout btnAgregar;
     private LinearLayout btnAgregarS;
-    private TextView btnDetalles;
     RecyclerView recyclerView;
 
     MyDatabaseHelper myDB;
     ArrayList<String> id, nombre, apat, amat, fecha, email, tel, rfc, image;
     CustomAdapter customAdapter;
 
-
-
     public ClientesFragment() {
-
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_clientes, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
         btnAgregar = view.findViewById(R.id.add_cliente);
-        btnAgregar.setOnClickListener(this);
+        btnAgregar.setOnClickListener(v -> openAgregarClienteFragment());
         btnAgregarS = view.findViewById(R.id.add_solicitud);
-        btnAgregarS.setOnClickListener(this);
-        //btnDetalles = view.findViewById(R.id.txtDetalles1);
-        //btnDetalles.setOnClickListener(this);
+        btnAgregarS.setOnClickListener(v -> openAgregarSolicitudFragment());
 
         myDB = new MyDatabaseHelper(getActivity());
 
@@ -75,9 +67,9 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
     void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
-            //Toast.makeText(GetActivity(), "No hay datos", Toast.LENGTH_SHORT).show();
+            // Handle no data case
         } else {
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 id.add(cursor.getString(0));
                 nombre.add(cursor.getString(1));
                 apat.add(cursor.getString(2));
@@ -91,35 +83,21 @@ public class ClientesFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
+    private void openAgregarClienteFragment() {
+        Fragment agregarClienteFragment = new AgregarClientesFragment();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, agregarClienteFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
-        if (id == R.id.add_cliente) {
-            Fragment agregarClienteFragment = new AgregarClientesFragment();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frameLayout, agregarClienteFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-
-        if (id == R.id.add_solicitud) {
-            Fragment agregarSolicitudFragment = new AgregarSolicitudFragment();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frameLayout, agregarSolicitudFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-
-        if (id == R.id.txtDetalles1) {
-            Fragment detallesClienteFragment = new DetallesClienteFragment();
-            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.frameLayout, detallesClienteFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
+    private void openAgregarSolicitudFragment() {
+        Fragment agregarSolicitudFragment = new AgregarSolicitudFragment();
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, agregarSolicitudFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }
