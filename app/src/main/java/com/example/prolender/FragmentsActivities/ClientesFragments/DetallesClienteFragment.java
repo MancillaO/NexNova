@@ -1,48 +1,40 @@
 package com.example.prolender.FragmentsActivities.ClientesFragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.prolender.Database.MyDatabaseHelper;
 import com.example.prolender.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetallesClienteFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DetallesClienteFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_CLIENT_ID = "clientId";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String clientId;
+
+    private TextView idTextView;
+    private TextView nombreTextView;
+    private TextView apatTextView;
+    private TextView amatTextView;
+    private TextView fechaTextView;
+    private TextView emailTextView;
+    private TextView telTextView;
+    private TextView rfcTextView;
 
     public DetallesClienteFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DetallesClienteFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DetallesClienteFragment newInstance(String param1, String param2) {
+    public static DetallesClienteFragment newInstance(String clientId) {
         DetallesClienteFragment fragment = new DetallesClienteFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_CLIENT_ID, clientId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,15 +43,46 @@ public class DetallesClienteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            clientId = getArguments().getString(ARG_CLIENT_ID);
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detalles_cliente, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_detalles_cliente, container, false);
+
+        idTextView = view.findViewById(R.id.campoID);
+        nombreTextView = view.findViewById(R.id.campoNombre);
+        apatTextView = view.findViewById(R.id.campoAppat);
+        amatTextView = view.findViewById(R.id.campoAmat);
+        fechaTextView = view.findViewById(R.id.campoFecha);
+        emailTextView = view.findViewById(R.id.campoCorreo);
+        telTextView = view.findViewById(R.id.campoNumero);
+        rfcTextView = view.findViewById(R.id.campoRFC);
+
+        if (clientId != null) {
+            loadClientDetails(clientId);
+        }
+
+        return view;
+    }
+
+    private void loadClientDetails(String clientId) {
+        MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+        Cursor cursor = myDB.getClientById(clientId);
+
+        if (cursor.moveToFirst()) {
+            idTextView.setText(cursor.getString(0)); // ID
+            nombreTextView.setText(cursor.getString(1)); // Nombre
+            apatTextView.setText(cursor.getString(2)); // Apellido Paterno
+            amatTextView.setText(cursor.getString(3)); // Apellido Materno
+            fechaTextView.setText(cursor.getString(4)); // Fecha
+            emailTextView.setText(cursor.getString(5)); // Email
+            telTextView.setText(cursor.getString(6)); // Teléfono
+            rfcTextView.setText(cursor.getString(7)); // RFC
+        }
+
+        cursor.close();
     }
 }
+

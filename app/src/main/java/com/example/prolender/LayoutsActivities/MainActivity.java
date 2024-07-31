@@ -3,39 +3,49 @@ package com.example.prolender.LayoutsActivities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.prolender.Login.Usuario;
 import com.example.prolender.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText edtU, edtC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        edtU = findViewById(R.id.email);
+        edtC = findViewById(R.id.password);
     }
 
     public void onClick(View view) {
         int id = view.getId();
-        Intent miIntent = null;
 
         if (id == R.id.btnCrear) {
-            miIntent = new Intent(MainActivity.this, CrearCuentaActivity.class);
-        }
-
-
-        if (id == R.id.btnContinuar) {
-            miIntent = new Intent(MainActivity.this, HomeActivity.class);
-
-
-        }
-
-        if (miIntent != null) {
+            Intent miIntent = new Intent(MainActivity.this, CrearCuentaActivity.class);
             startActivity(miIntent);
+            finish();
+        } else if (id == R.id.btnContinuar) {
+            onLoginClick(view);
+        }
+    }
+
+    public void onLoginClick(View view) {
+        String usuario = edtU.getText().toString();
+        String contraseña = edtC.getText().toString();
+
+        if (Usuario.esUsuarioValido(usuario, contraseña)) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            startActivity(intent);
+            finish();
         } else {
-            Toast.makeText(this, "Acción no reconocida", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Usuario o Contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }
     }
 }
