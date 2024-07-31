@@ -97,7 +97,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/bucar_solicitud"
-            android:layout_marginTop="40dp"
             >
 
             <LinearLayout
@@ -114,7 +113,9 @@
                     android:textColor="@color/primary_color"
                     android:textStyle="bold"
                     android:textSize="16dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="40dp"
+                    />
 
                 <TextView
                     android:id="@+id/campoOcupacion"
@@ -211,31 +212,6 @@
 
 
                 <EditText
-                    android:id="@+id/campoMontoA"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:hint="Monto Aprobado"
-                    android:ems="10"
-                    android:textColor="#54555B"
-                    android:paddingVertical="12dp"
-                    android:paddingHorizontal="20dp"
-                    android:background="@drawable/border_edittext_background"
-                    android:layout_gravity="center"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Monto Aprobado:"
-                    android:textColor="@color/primary_color"
-                    android:textStyle="bold"
-                    android:textSize="16dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginBottom="10dp"/>
-
-
-                <EditText
                     android:id="@+id/campoDictamen"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
@@ -309,6 +285,7 @@
                     android:textColor="#ffffff"
                     android:textSize="16dp"
                     android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
                     android:padding="12dp"
                     android:layout_gravity="center"
                     />

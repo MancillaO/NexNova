@@ -21,6 +21,7 @@ import java.util.Calendar;
 
 public class AgregarPrestamoFragment extends Fragment {
 
+    EditText campoMonto, campoPlazo, campoMetodo;
     private EditText campoFechaC;
     private EditText campoFechaD;
     private ImageView selectDateButtonD;
@@ -36,10 +37,26 @@ public class AgregarPrestamoFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_agregar_prestamo, container, false);
 
+        campoMonto = view.findViewById(R.id.campoMonto);
+        campoPlazo = view.findViewById(R.id.campoPlazo);
+        campoMetodo = view.findViewById(R.id.campoMetodo);
+        campoFechaC = view.findViewById(R.id.campoFechaC);
+        campoFechaD = view.findViewById(R.id.campoFechaD);
+
         Button btnRegistrar = view.findViewById(R.id.btnRegistrar);
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String montoStr = campoMonto.getText().toString().trim();
+                String plazoStr = campoPlazo.getText().toString().trim();
+                String metodoStr = campoMetodo.getText().toString().trim();
+                String fechaCStr = campoFechaC.getText().toString().trim();
+                String fechaDStr = campoFechaD.getText().toString().trim();
+
+                MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
+
+                myDB.addPrestamo(montoStr, fechaCStr, plazoStr, metodoStr, fechaDStr);
 
                 Fragment prestamosFragment = new PrestamosFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

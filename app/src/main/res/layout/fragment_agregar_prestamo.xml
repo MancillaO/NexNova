@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgregarPrestamoFragment">
+    tools:context=".FragmentsActivities.PrestamosFragments.AgregarPrestamoFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -55,11 +55,25 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
+                <EditText
+                    android:id="@+id/campoMonto"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border_edittext_background"
+                    android:ems="10"
+                    android:hint="Monto Aprobado"
+                    android:inputType="number"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="12dp"
+                    android:textColor="#1D2262" />
+
                 <LinearLayout
                     android:id="@+id/layoutFechaC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
                     android:gravity="center_vertical">
 
                     <EditText
@@ -92,7 +106,6 @@
 
                 </LinearLayout>
 
-
                 <EditText
                     android:id="@+id/campoPlazo"
                     android:layout_width="300dp"
@@ -106,8 +119,6 @@
                     android:paddingVertical="12dp"
                     android:layout_marginTop="20dp"
                     android:textColor="#1D2262" />
-
-
 
                 <EditText
                     android:id="@+id/campoMetodo"
@@ -160,8 +171,9 @@
                         android:onClick="onClick"
                         android:src="@drawable/icon_calendar" />
 
-                </LinearLayout>
 
+
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
@@ -180,5 +192,6 @@
             android:text="Continuar"
             android:textColor="#ffffff"
             android:textSize="16dp" />
+
     </RelativeLayout>
 </FrameLayout>

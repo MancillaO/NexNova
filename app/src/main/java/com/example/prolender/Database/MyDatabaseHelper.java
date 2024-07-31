@@ -67,14 +67,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String CAMPO_INGRESOS = "ingreso";
 
     // Tabla de prestamos
-    public static String TABLA_PRESTAMO = "prestamo";
-    public static String ID_PRESTAMO = "id_prestamo";
-    public static String ID_SOLICITUD = "id_solicitud";
-    public static String MONTO_PRESTAMO = "montoPrestamo";
-    public static String FECHA_CORTR = "fechaCortr";
-    public static String PLAZO_PAGO = "plazoPago";
-    public static String METODO_PAGO = "metodoPago";
-    public static String FECHA_DEPOSITO = "fechaDeposito";
+    public static final String TABLE_PRESTAMO = "prestamo";
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_MONTO = "montoAprobado";
+    public static final String COLUMN_FECHA_CORTE = "fechaCorte";
+    public static final String COLUMN_PLAZO_PAGO = "plazoPago";
+    public static final String COLUMN_METODO_PAGO = "metodoPago";
+    public static final String COLUMN_FECHA_DEPOSITO = "fechaDeposito";
 
     // Tabla de Pagos
     public static String TABLA_PAGO = "pago";
@@ -126,7 +125,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(crearDireccion);
         Log.d("MyDatabaseHelper", "Table created: " + crearDireccion);
 
-
         String crearSolicitud = "CREATE TABLE " + TABLE_SOLICITUD + "("
                 + CAMPO_ID_SOLICITUD + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + CAMPO_ID_CLIENTE + " INTEGER, "
@@ -138,32 +136,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         Log.d("MyDatabaseHelper", "Table created: " + crearCliente);
 
-        String crearPrestamo = "CREATE TABLE " + TABLA_PRESTAMO + "("
-                + ID_PRESTAMO + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ID_SOLICITUD + " INTEGER, "
-                + MONTO_PRESTAMO + " TEXT, "
-                + FECHA_CORTR + " TEXT, "
-                + PLAZO_PAGO + " TEXT, "
-                + METODO_PAGO + " TEXT, "
-                + FECHA_DEPOSITO + " TEXT);";
+        String crearPrestamo = "CREATE TABLE " + TABLE_PRESTAMO + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_MONTO + " TEXT, " +
+                COLUMN_FECHA_CORTE + " TEXT, " +
+                COLUMN_PLAZO_PAGO + " TEXT, " +
+                COLUMN_METODO_PAGO + " TEXT, " +
+                COLUMN_FECHA_DEPOSITO + " TEXT)";
         db.execSQL(crearPrestamo);
 
         Log.d("MyDatabaseHelper", "Table created: " + crearPrestamo);
-
-
     }
 
     // Actualizar la base de datos, eliminar tabla si ya existe y crear de nuevo
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CLIENTE);
-        onCreate(db);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_DIRECCION);
-        onCreate(db);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SOLICITUD);
-        onCreate(db);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLA_PRESTAMO);
-        onCreate(db);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRESTAMO);
         db.execSQL("DROP TABLE IF EXISTS " + TABLA_PAGO);
         onCreate(db);
     }
@@ -252,18 +243,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void addPrestamo(String id_prestamo, String id_solicitud, String montoPrestamo, String fechaCortr, String plazoPago, String metodoPago, String fechaDeposito) {
-        SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
-        ContentValues cv = new ContentValues();  // Contenedor para los valores
+    public void addPrestamo(String monto, String fechaC, String plazo, String metodo, String fechaD) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLUMN_ID, monto);
+        contentValues.put(COLUMN_FECHA_CORTE, fechaC);
+        contentValues.put(COLUMN_PLAZO_PAGO, plazo);
+        contentValues.put(COLUMN_METODO_PAGO, metodo);
+        contentValues.put(COLUMN_FECHA_DEPOSITO, fechaD);
 
-        // Asigna los valores a los campos de la tabla
-        cv.put(ID_PRESTAMO, id_prestamo);
-        cv.put(ID_SOLICITUD, id_solicitud);
-        cv.put(MONTO_PRESTAMO, montoPrestamo);
-        cv.put(FECHA_CORTR, fechaCortr);
-
-        // Inserta los valores en la tabla
-        long result = db.insert(TABLA_PRESTAMO, null, cv);
+        long result = db.insert(TABLE_PRESTAMO, null, contentValues);
         Log.d("MyDatabaseHelper", "Insert result: " + result);
 
         // Muestra un mensaje si la inserción fue exitosa o fallida
@@ -273,6 +262,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     public void addPago(String id_pago, String id_prestamoPago, String numPago, String fechaPago, String montoPago, String nuevoSaldo, String montoPagado) {
         SQLiteDatabase db = this.getWritableDatabase();  // Obtiene la base de datos en modo escritura
@@ -311,6 +301,17 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor; // Devuelve el cursor con los datos
     }
 
+    public Cursor readAllDataPrestamo() {
+        String query = "SELECT * FROM " + TABLE_PRESTAMO;  // Consulta SQL para seleccionar todos los datos
+        SQLiteDatabase db = this.getReadableDatabase();   // Obtiene la base de datos en modo lectura
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);  // Ejecuta la consulta SQL
+        }
+        return cursor; // Devuelve el cursor con los datos
+    }
+
     // Método para actualizar un registro de la base de datos
     public void UpdateData(String row_id, String nombre, String apat, String amat, String fecha, String email, String tel, String rfc, byte[] imagen) {
         SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
@@ -336,6 +337,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
         }
     }
+    /*
+    public void UpdateDataPrestamo(String id_prestamo, String montoPrestamo, String fechaCorte, String plazoPago, String metodoPago, String fechaDeposito, String id_clientePrestamo) {
+        SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
+        ContentValues cv = new ContentValues(); // Contenedor para los valores
+
+        // Pone los valores en el contenedor
+        cv.put(MONT, montoPrestamo);
+        cv.put(FECHA_CORTE, fechaCorte);
+        cv.put(PLAZO_PAGO, plazoPago);
+        cv.put(METODO_PAGO, metodoPago);
+        cv.put(FECHA_DEPOSITO, fechaDeposito);
+
+        // Actualiza el registro en la base de datos y obtiene el resultado
+        long result = db.update(TABLA_PRESTAMO, cv, "id_prestamo=?", new String[]{id_prestamo});
+
+        // Muestra un mensaje si la actualización fue exitosa o fallida
+        if (result == -1) {
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+        }
+    }
+    */
 
     // Método para eliminar un registro de la base de datos
     public void deleteOneRow(String row_id) {
@@ -352,10 +376,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteOneRowPrestamo(String id_prestamo) {
+        SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
+
+        // Elimina el registro y obtiene el resultado
+        long result = db.delete(TABLE_PRESTAMO, "id_prestamo=?", new String[]{id_prestamo});
+
+        // Muestra un mensaje si la eliminación fue exitosa o fallida
+        if (result == -1) {
+            Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     // Método para eliminar todos los registros de la base de datos
     public void deleteAllData() {
         SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
         db.execSQL("DELETE FROM " + TABLE_CLIENTE);  // Ejecuta una consulta SQL para eliminar todos los registros
+    }
+
+    public void deleteAllDataPrestamo() {
+        SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
+        db.execSQL("DELETE FROM " + TABLE_PRESTAMO);  // Ejecuta una consulta SQL para eliminar todos los registros
     }
 
     /********************************************************************************************/
@@ -372,7 +415,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_CLIENTE + " WHERE " + CAMPO_ID + " = ?", new String[]{id});
     }
 
-
+    public Cursor getPrestamoById(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_PRESTAMO + " WHERE " + COLUMN_ID + " = ?", new String[]{id});
+    }
 
     /************************ Funcion para hacer un alert dialog  ***************************/
 

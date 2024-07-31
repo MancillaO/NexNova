@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetallesPrestamoFragment"
+    tools:context=".FragmentsActivities.PrestamosFragments.DetallesPrestamoFragment"
     >
 
     <RelativeLayout
@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:background="#E9E9E9"
         tools:context=".DetallesPrestamoFragment"
-
         >
 
         <RelativeLayout
@@ -62,6 +61,31 @@
                 android:orientation="vertical"
                 android:layout_gravity="center_horizontal"
                 >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID:"
+                    android:textColor="@color/primary_color"
+                    android:textStyle="bold"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <EditText
+                    android:id="@+id/campoID"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="ID"
+                    android:inputType="number"
+                    android:textColor="#1D2262"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="20dp"
+                    android:background="@drawable/border_edittext_background"
+                    android:layout_gravity="center"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -232,11 +256,11 @@
                     />
 
                 <EditText
-                    android:id="@+id/campoNombre"
+                    android:id="@+id/campoIDCliente"
                     android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Nombre(s)"
+                    android:hint="ID Cliente"
                     android:inputType="textPersonName"
                     android:textColor="#1D2262"
                     android:paddingVertical="12dp"

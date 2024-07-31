@@ -13,7 +13,7 @@
         tools:ignore="MissingConstraints">
 
         <RelativeLayout
-            android:id="@+id/prestamo1"
+            android:id="@+id/prestamo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
@@ -22,28 +22,48 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="20dp">
 
-            <TextView
-                android:id="@+id/prestamo_titulo1"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/layoutTitulo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Monto: $12,100"
-                android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/prestamo_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monto:"
+                    android:textColor="#000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtMonto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12.00"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@id/prestamo_titulo"/>
+
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/prestamo_titulo1"
+                android:layout_below="@id/layoutTitulo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/background" />
 
             <TextView
-                android:id="@+id/tituloPlazo1"
+                android:id="@+id/tituloPlazo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/prestamo_titulo1"
+                android:layout_below="@id/layoutTitulo"
                 android:layout_marginTop="15dp"
                 android:text="Plazo de pago:"
                 android:textColor="#000000"
@@ -51,13 +71,13 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtCorreo1"
+                android:id="@+id/txtPlazo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/prestamo_titulo1"
+                android:layout_below="@id/layoutTitulo"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="15dp"
-                android:layout_toRightOf="@id/tituloPlazo1"
+                android:layout_toRightOf="@id/tituloPlazo"
                 android:text="6 meses"
                 android:textColor="#000000"
                 android:textSize="18sp" />
@@ -66,22 +86,22 @@
                 android:id="@+id/tituloRestante1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tituloPlazo1"
+                android:layout_below="@id/tituloPlazo"
                 android:layout_marginTop="5dp"
-                android:text="Restante por pagar:"
+                android:text="Fecha de corte:"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtTelefono1"
+                android:id="@+id/txtFecha"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tituloPlazo1"
+                android:layout_below="@id/tituloPlazo"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/tituloRestante1"
-                android:text="$8,200"
+                android:text="19/02/2004"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
