@@ -44,7 +44,6 @@ public class AgregarClientesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_agregar_clientes, container, false);
 
         nombre = view.findViewById(R.id.campoNombre);
@@ -68,30 +67,57 @@ public class AgregarClientesFragment extends Fragment {
         btnContinuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Obtiene los datos de los campos
+                String nombreStr = nombre.getText().toString().trim();
+                String apatStr = apat.getText().toString().trim();
+                String amatStr = amat.getText().toString().trim();
+                String fechaNacStr = fechaNac.getText().toString().trim();
+                String emailStr = email.getText().toString().trim();
+                String telStr = tel.getText().toString().trim();
+                String rfcStr = rfc.getText().toString().trim();
+
+                // Valida los campos vacíos
+                if (nombreStr.isEmpty() || apatStr.isEmpty() || amatStr.isEmpty() ||
+                        fechaNacStr.isEmpty() || emailStr.isEmpty() || telStr.isEmpty() || rfcStr.isEmpty()) {
+                    Toast.makeText(getContext(), "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Valida que los campos de nombre no contengan números
+                if (!nombreStr.matches("[a-zA-Z]+") || !apatStr.matches("[a-zA-Z]+") || !amatStr.matches("[a-zA-Z]+")) {
+                    Toast.makeText(getContext(), "Nombre, Apellido Paterno y Apellido Materno no deben contener números", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Valida que el número de teléfono tenga exactamente 10 dígitos
+                if (!telStr.matches("\\d{10}")) {
+                    Toast.makeText(getContext(), "El número de teléfono debe tener 10 dígitos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // Crea una instancia de MyDatabaseHelper
                 MyDatabaseHelper myDB = new MyDatabaseHelper(getActivity());
                 // Convierte la imagen seleccionada a un array de bytes
                 byte[] imagenBytes = convertImageToBytes(selectedImageBitmap);
 
-                // Inserta los datos del cliente para agregarlos a la base de datos
+                // Inserta los datos del cliente en la base de datos
                 myDB.addCliente(
-                        nombre.getText().toString().trim(),
-                        apat.getText().toString().trim(),
-                        amat.getText().toString().trim(),
-                        fechaNac.getText().toString().trim(),
-                        email.getText().toString().trim(),
-                        tel.getText().toString().trim(),
-                        rfc.getText().toString().trim(),
+                        nombreStr,
+                        apatStr,
+                        amatStr,
+                        fechaNacStr,
+                        emailStr,
+                        telStr,
+                        rfcStr,
                         imagenBytes);  // Pasa la imagen en formato de bytes
 
+                // Navega al fragmento de agregar dirección
                 Fragment agregarDireccionFragment = new AgregarDireccionFragment();
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frameLayout, agregarDireccionFragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
             }
         });
 
@@ -107,7 +133,6 @@ public class AgregarClientesFragment extends Fragment {
         DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // Update the EditText with the selected date
                 campoFecha.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
             }
         }, year, month, day);
