@@ -301,11 +301,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor; // Devuelve el cursor con los datos
     }
 
-    public Cursor getClientById(String id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT * FROM clientes WHERE id_cliente = ?", new String[]{id});
-    }
-
     // Método para actualizar un registro de la base de datos
     public void UpdateData(String row_id, String nombre, String apat, String amat, String fecha, String email, String tel, String rfc, byte[] imagen) {
         SQLiteDatabase db = this.getWritableDatabase(); // Obtiene la base de datos en modo escritura
@@ -360,6 +355,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM solicitud WHERE id_solicitud = ?", new String[]{solicitudId});
     }
+
+    public Cursor getClientById(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_CLIENTE + " WHERE " + CAMPO_ID + " = ?", new String[]{id});
+    }
+
+
 
 
 }

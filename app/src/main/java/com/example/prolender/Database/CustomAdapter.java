@@ -60,13 +60,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.email_text.setText(String.valueOf(email.get(position)));
         holder.tel_text.setText(String.valueOf(tel.get(position)));
 
-        // Manejar el clic en el TextView de detalles
         holder.detalles_text.setOnClickListener(v -> {
-            // Crear el fragmento con los detalles del cliente
-            DetallesClienteFragment detallesFragment = DetallesClienteFragment.newInstance(
-                    String.valueOf(id.get(position)),
-                    nombreCompleto // Puedes agregar más datos si es necesario
-            );
+            // Obtener el ID del cliente
+            String clienteId = String.valueOf(id.get(position));
+
+            // Crear el fragmento con el ID del cliente
+            DetallesClienteFragment detallesFragment = DetallesClienteFragment.newInstance(clienteId);
 
             // Reemplazar el fragmento actual con el nuevo fragmento
             ((FragmentActivity) context).getSupportFragmentManager()
@@ -93,6 +92,5 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             tel_text = itemView.findViewById(R.id.txtTelefono);
             detalles_text = itemView.findViewById(R.id.txtDetalles); // Añadir txtDetalles
         }
-
     }
 }
