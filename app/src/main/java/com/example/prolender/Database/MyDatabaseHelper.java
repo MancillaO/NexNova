@@ -180,11 +180,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Log.d("MyDatabaseHelper", "Insert result: " + result);
 
         // Muestra un mensaje si la inserción fue exitosa o fallida
+        /*
         if (result == -1) {
             Toast.makeText(context, "Registro Fallido ", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
         }
+
+         */
     }
 
     public void addDireccion(String calle, String numInt, String numExt, String colonia, String estado, String codigoPostal, String tpPropiedad) {

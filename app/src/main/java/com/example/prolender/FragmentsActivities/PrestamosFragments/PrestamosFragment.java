@@ -15,9 +15,11 @@ import com.example.prolender.R;
 
 public class PrestamosFragment extends Fragment implements View.OnClickListener {
 
+
     private LinearLayout btnAgregar;
     private LinearLayout btnCD;
-    private TextView btnDetalles;
+    //private TextView btnDetalles;
+
 
 
     public PrestamosFragment() {
@@ -30,13 +32,15 @@ public class PrestamosFragment extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_prestamos, container, false);
 
+
         btnAgregar = view.findViewById(R.id.ver_solicitud);
         btnAgregar.setOnClickListener(this);
         btnCD = view.findViewById(R.id.cobro_deposito);
         btnCD.setOnClickListener(this);
-        btnDetalles = view.findViewById(R.id.txtDetalles1);
-        btnDetalles.setOnClickListener(this);
+        //btnDetalles = view.findViewById(R.id.txtDetalles1);
+        //btnDetalles.setOnClickListener(this);
         return view;
+
     }
 
     @Override
