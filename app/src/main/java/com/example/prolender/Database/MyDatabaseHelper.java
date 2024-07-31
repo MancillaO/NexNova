@@ -1,14 +1,23 @@
 package com.example.prolender.Database;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.prolender.R;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
@@ -212,9 +221,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         // Muestra un mensaje si la inserción fue exitosa o fallida
         if (result == -1) {
-            Toast.makeText(context, "Registro Fallido "+id_clienteDireccion, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Registro Fallido ", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
+            alertAprobado();
+            //Toast.makeText(context, "Registro Exitoso", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -363,5 +373,71 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
 
 
+    /************************ Funcion para hacer un alert dialog  ***************************/
+
+    public void alertAprobado() {
+        // Verifica si el contexto no es nulo y es una instancia de una Actividad
+        if (context != null && context instanceof Activity) {
+            Activity activity = (Activity) context;
+
+            // Infla la vista desde el layout XML
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.aprovado_dialog, null);
+
+            // Encuentra el botón en la vista inflada
+            Button aprovadoDone = view.findViewById(R.id.aprovadoDone);
+
+            // Crea y configura el AlertDialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setView(view);
+            AlertDialog dialog = builder.create();
+
+            // Configura el botón para cerrar el diálogo y mostrar un Toast
+            aprovadoDone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // Establece un fondo transparente si es necesario
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            // Muestra el diálogo
+            dialog.show();
+        }
+    }
+
+
+
+    /*
+    public void alertAprobado() {
+        ConstraintLayout successConstraintLayout = findViewById(R.id.successConstraintLayout);
+        View view = LayoutInflater.from(context).inflate(R.layout.aprovado_dialog, successConstraintLayout);
+        Button aprovadoDone = view.findViewById(R.id.aprovadoDone);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+
+        aprovadoDone.findViewById(R.id.aprovadoDone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                Toast.makeText(context,"Done",Toast.LENGTH_SHORT).show();
+            }
+        });
+        if(alertDialog.getWindow() != null){
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        }
+        alertDialog.show();
+    }
+
+     */
+
+    /****************************************************************************************/
 
 }

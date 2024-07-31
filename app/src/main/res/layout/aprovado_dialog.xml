@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/aprobadoVentana"
-        android:layout_width="176dp"
+        android:layout_width="match_parent"
         android:layout_height="170dp"
         android:background="@drawable/custom_bkg"
         app:layout_constraintBottom_toBottomOf="parent"
