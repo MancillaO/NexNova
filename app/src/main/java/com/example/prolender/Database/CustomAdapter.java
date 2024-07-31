@@ -93,5 +93,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             tel_text = itemView.findViewById(R.id.txtTelefono);
             detalles_text = itemView.findViewById(R.id.txtDetalles); // Añadir txtDetalles
         }
+
     }
 }
