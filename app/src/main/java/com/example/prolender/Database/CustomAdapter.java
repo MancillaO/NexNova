@@ -61,6 +61,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         holder.tel_text.setText(String.valueOf(tel.get(position)));
 
         holder.detalles_text.setOnClickListener(v -> {
+
             // Obtener el ID del cliente
             String clienteId = String.valueOf(id.get(position));
 
